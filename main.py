@@ -1,55 +1,44 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Apr 11 11:21:54 2022
-
-@author: hamidat
-"""
 from PIL import Image
 import numpy as np
 
 
-filin = open("last_image.txt", "r")
-rows=int(filin.__iter__().__next__())
-
-cols=int(filin.__iter__().__next__())
+filin = open("input.txt", "r")
 
 
-
-#Create a 2 dimensional list using rows nd cols
-#write here
-matrix = 
+rows = int(filin.__iter__().__next__())
+cols = int(filin.__iter__().__next__())
 
 
+# create a 2 dimensional list using rows nd cols
+matrix = np.zeros((rows, cols))
 
 
-#Fill in the double loop in order to fill the matrix
+# fill in the double loop in order to fill the matrix
 for y in range(rows):
-    #write here
-  
-     
-     for x in range(cols):
-         #write here
+    row = filin.__iter__().__next__()
+    row = row.rstrip(" ").lstrip(" ").split(" ")
+
+    for x in range(cols):
+        matrix[y, x] = int(row[x])
          
 
-#TEST if it is ok    -->just check
-print(arr[2][1])    
-
-#Close the file 'last_image
-
-#write here
+# close the file 'input' file
+filin.close()
 
 
-#Find the minimum of the matrix below, store it inside the variable min
-
-#write here
-
-
-min=0
-#Find the maximum of the matrix below, store it inside the variable max
-
-#write here
-
-max=0
+# find the minimum and the maximum of the matrix below, store it inside the variable min
+min, max = matrix[0, 0], matrix[0, 0]
+for y in range(rows):
+    
+    for x in range(cols):
+        
+        value = matrix[y, x]
+        
+        if value < min:
+            min = value
+        if value > max:
+            max = value
+        
 
 #TEST check the max and min values -->just check
 print("max is: ",max," min is: ", min)
@@ -71,4 +60,5 @@ for y in range(len(arr)):
     for x in range(len(arr[0])):
         #write here
 
-new_image.save('foo.png', 'png')
+# save output
+new_image.save('output.png', 'PNG')
