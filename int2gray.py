@@ -36,17 +36,8 @@ def fillMatrix(fileinput, matrix):
 
 #
 #
-def findMinMaxValues(matrix):
-    rows, cols = matrix.shape
-    minval, maxval = matrix[0, 0], matrix[0, 0]
-    
-    for y in range(rows):
-        for x in range(cols):
-            value = matrix[y, x]
-            minval = value if value < minval else minval 
-            maxval = value if value > maxval else maxval 
-    
-    return minval, maxval
+def findMinMaxValues(matrix):    
+    return np.min(matrix), np.max(matrix)
 
 
 #
@@ -83,6 +74,7 @@ def matchMatrixValuesWithPixels(matrix, pixels, m, b):
 #
 def saveImage(image, name, format_):
     image.save(f"{name}.{format_}", format_)
+    
     return True
 
 
