@@ -90,31 +90,34 @@ def saveImage(image, name, format_):
 #
 def process(fileinput, output, format_):
     
-    # ouvrir le fichier avec les entrees
-    fileinput = open(fileinput, "r")
+    try:
+        # ouvrir le fichier avec les entrees
+        fileinput = open(fileinput, "r")
+        
+        # extraires la taille de l'image + creer la matrice
+        rows, cols = extractImageSize(fileinput)
+        matrix = createMatrix(rows=rows, cols=cols)
+        
+        # remplir la matrice avec les valeurs d'entrees
+        fillMatrix(fileinput=fileinput, matrix=matrix)
+        
+        # fermer le fichier des entrees
+        fileinput.close()
+
+        # trouver la valeur MINIMAL & MAXIMAL
+        minval, maxval = findMinMaxValues(matrix)
+
+        # trouver les parametres de l'equation lineaire
+        m, b = findParamatersOfLinearEquation(minval=minval, maxval=maxval)
+
+        # creer une image en GRAYSCALE
+        image, pixels = createGrayscaleImage(rows=rows, cols=cols)
+        matchMatrixValuesWithPixels(matrix=matrix, pixels=pixels, m=m, b=b)
+        
+        # sauvegarder l'image
+        saveImage(image=image, name=output, format_=format_)
+
+        return True
     
-    # extraires la taille de l'image + creer la matrice
-    rows, cols = extractImageSize(fileinput)
-    matrix = createMatrix(rows=rows, cols=cols)
-    
-    # remplir la matrice avec les valeurs d'entrees
-    fillMatrix(fileinput=fileinput, matrix=matrix)
-    
-    # fermer le fichier des entrees
-    fileinput.close()
-
-    # trouver la valeur MINIMAL & MAXIMAL
-    minval, maxval = findMinMaxValues(matrix)
-
-    # trouver les parametres de l'equation lineaire
-    m, b = findParamatersOfLinearEquation(minval=minval, maxval=maxval)
-
-    # creer une image en GRAYSCALE
-    image, pixels = createGrayscaleImage(rows=rows, cols=cols)
-    matchMatrixValuesWithPixels(matrix=matrix, pixels=pixels, m=m, b=b)
-    
-    # sauvegarder l'image
-    saveImage(image=image, name=output, format_=format_)
-
-    return True
-
+    except:
+        return None
